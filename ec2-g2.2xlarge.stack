@@ -1,0 +1,33 @@
+# create ssh key to interact with git:
+# follow instructions at https://help.github.com/articles/generating-ssh-keys/
+# Then clone the gpu_devel repo:
+$ git clone git@github.com:adampbeardsley/gpu_devel.git
+
+# Installing/updating kernel and nvidia drivers
+$ sudo yum update -y
+$ sudo reboot
+$ sudo yum groupinstall -y "Development tools"
+$ sudo yum install kernel-devel-`uname -r`
+$ wget http://us.download.nvidia.com/XFree86/Linux-x86_64/346.96/NVIDIA-Linux-x86_64-346.96.run
+$ sudo /bin/bash ./NVIDIA-Linux-x86_64-346.96.run
+$ sudo reboot
+$ nvidia-smi -q | head
+
+WARNING: nvidia-installer was forced to guess the X library path '/usr/lib64' and X module path             
+           '/usr/lib64/xorg/modules'; these paths were not queryable from the system.  If X fails to find the 
+           NVIDIA X driver module, please install the `pkg-config` utility and the X.Org SDK/development      
+           package for your distribution and reinstall the driver.
+
+
+# Install conda
+$ wget wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda-2.3.0-Linux-x86_64.sh
+# (check continuum.io/downloads#all for up-to-date file)
+$ bash <downloaded file>
+# Install add ons.
+# Copy license (from email on 7/31/2015) to ~/.continuum/, then update/install
+$ conda update conda
+$ conda install accelerate
+$ conda install iopro
+$ conda create -n GPU_testing anaconda accelerate iopro
+$ source activate GPU_testing
+
